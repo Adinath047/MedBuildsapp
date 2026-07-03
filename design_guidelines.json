@@ -1,0 +1,204 @@
+{
+  "app_name": "Premium Health Connect",
+  "personality": "1 iOS-Native Clean",
+  "personality_one_liner": "A premium, reassuring, and flawlessly clean medical experience centered around trust, soft curves, and elegant whitespace.",
+  "color": {
+    "surface": "#F8FAFC",
+    "onSurface": "#0F172A",
+    "surfaceSecondary": "#FFFFFF",
+    "onSurfaceSecondary": "#1E293B",
+    "surfaceTertiary": "#F1F5F9",
+    "onSurfaceTertiary": "#334155",
+    "surfaceInverse": "#0F172A",
+    "onSurfaceInverse": "#FFFFFF",
+    "brand": "#2A7AF2",
+    "brandPrimary": "#2A7AF2",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#10B981",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#E0F2FE",
+    "onBrandTertiary": "#1D4ED8",
+    "success": "#10B981",
+    "onSuccess": "#FFFFFF",
+    "warning": "#F59E0B",
+    "onWarning": "#FFFFFF",
+    "error": "#EF4444",
+    "onError": "#FFFFFF",
+    "info": "#3B82F6",
+    "onInfo": "#FFFFFF",
+    "border": "#E2E8F0",
+    "borderStrong": "#CBD5E1",
+    "divider": "#F1F5F9"
+  },
+  "typography": {
+    "displayFontFamily": "Plus Jakarta Sans",
+    "textFontFamily": "Plus Jakarta Sans",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Generous vertical breathing room. Cards should never touch screen edges. Use generous padding inside elegant white cards.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "shadow_tier": "1",
+  "navigation": "bottom_tabs",
+  "icon_set": "Ionicons",
+  "glassmorphism": {
+    "enabled": "true",
+    "do's": [
+      "Use blur on bottom-tab bar so scrolling content is slightly visible behind it",
+      "Use glass effect for sticky header over scrolling content",
+      "Float 'Book Again' or action buttons using blur container when sticky"
+    ],
+    "dont's": [
+      "Don't overuse glass inside list cards",
+      "Avoid glass if readability drops below WCAG threshold"
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Home",
+      "purpose": "Provide a warm welcome, quick access to specialties, and immediate visibility of connected doctors and health tips.",
+      "states": {
+        "loading": "Centered soft spinner with a 'Loading health dashboard...' message.",
+        "empty": "N/A - Home has static sections.",
+        "error": "Message: 'Unable to load dashboard. Please try again.' with a Retry button."
+      },
+      "layout": "Root is a ScrollView. Top header with Location (left) and Avatar (right). Below header, a Welcome Banner (gradient background, text 'Good morning, Rahul', health illustration). Next section: 'Specialties' horizontally scrollable row of icons in rounded boxes. Next section: 'My Doctors' horizontal scrollable list of connected doctors (Card with Photo, Name, Speciality, Visit button). Next section: 'Health Tips' carousel with full bleed image cards and gradient-to-dark scrim for text readability."
+    },
+    {
+      "name": "Appointments",
+      "purpose": "Track upcoming and past consultations with clear status indicators.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "Illustration of calendar + 'No appointments scheduled' + 'Book an Appointment' CTA.",
+        "error": "Error loading appointments. Retry button."
+      },
+      "layout": "Sticky Header with 'Appointments'. Segmented tabs below header (Upcoming / Past). Underneath, a vertical list of elegant white cards. Each card contains doctor photo (left), Name & hospital & date (right), a status badge (e.g. 'Confirmed' in mint green), and action buttons at bottom of the card (Reschedule / Book Again). Cards have soft shadow_tier 1."
+    },
+    {
+      "name": "MyDocs",
+      "purpose": "A comprehensive directory to search, filter, and access all connected doctors. Serves as the central floating action tab.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "Illustration + 'You haven't connected with any doctors yet.'",
+        "error": "Error loading doctors list. Retry button."
+      },
+      "layout": "Header with search bar and filter chips (Cardio, Derma, Nearby) below it. Vertical ScrollView of Doctor cards. Each card spans full width (minus padding). Card layout: Row with Doctor Image, Name, Hospital, Specialty. A small pill indicating 'Consulted 3 times'. A prominent 'Visit' or 'Book' button aligned to the right or bottom of the card. Tapping card navigates to Doctor Overview."
+    },
+    {
+      "name": "Doctor Overview",
+      "purpose": "Detailed profile of a doctor and history of patient interactions.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "N/A",
+        "error": "Failed to load doctor profile."
+      },
+      "layout": "Top section: Doctor Photo, Name, Specialization, Hospital, Rating/Experience in a clean centered or aligned-left layout. Sticky primary CTA 'Book Again' at the bottom of the screen (in a glass container). Middle section: Two tabs or vertical sections showing 'Appointments Till Date' (list of past dates) and 'Prescriptions' from this doctor."
+    },
+    {
+      "name": "Prescription",
+      "purpose": "View and manage digital medical prescriptions cleanly and legibly.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "Pill icon + 'No prescriptions found.'",
+        "error": "Error loading prescriptions."
+      },
+      "layout": "Vertical list grouped by Date/Doctor. Each item is a card showing Doctor Name, Date, small preview of medicine names, and a 'View Prescription' button. Clicking opens a detailed view (BottomSheet or new screen) containing clean readable medical format (Doctor details header, list of medicines with dosage instructions, advice notes)."
+    },
+    {
+      "name": "Profile",
+      "purpose": "Patient personal details and app settings.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "N/A",
+        "error": "N/A"
+      },
+      "layout": "Top: Patient Avatar, Name, Contact info, Location. Below: A list of touchable rows (Personal Details, My Doctors, My Appointments, Prescriptions, Notifications, Help & Support). Each row has an icon in a brandTertiary tinted rounded container, title, and right chevron."
+    },
+    {
+      "name": "Book Appointment",
+      "purpose": "Seamless flow to select date, time and confirm booking.",
+      "states": {
+        "loading": "Spinner during confirmation",
+        "empty": "N/A",
+        "error": "Booking failed. Retry."
+      },
+      "layout": "Doctor summary at top (small). Calendar strip (horizontal scroll for dates). Grid of available time slots below. Sticky 'Confirm Booking' CTA at the bottom."
+    }
+  ],
+  "images": {
+    "patient_rahul": {
+      "url": "https://images.unsplash.com/photo-1625241152315-4a698f74ceb7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBtYW4lMjBzbWlsaW5nJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgzMDczNjczfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Rahul Patil Patient Avatar"
+    },
+    "dr_anjali": {
+      "url": "https://images.unsplash.com/photo-1659353888906-adb3e0041693?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBpbmRpYW4lMjBkb2N0b3IlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODMwNzM2ODd8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Dr. Anjali Mehta Portrait"
+    },
+    "dr_karan": {
+      "url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBpbmRpYW4lMjBkb2N0b3IlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODMwNzM2NzN8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Dr. Karan Shah Portrait"
+    },
+    "dr_arjun": {
+      "url": "https://images.unsplash.com/photo-1637059824899-a441006a6875?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBpbmRpYW4lMjBkb2N0b3IlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODMwNzM2NzN8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Dr. Arjun Rao Portrait"
+    },
+    "welcome_banner_bg": {
+      "url": "https://images.unsplash.com/photo-1557683316-973673baf926?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwxfHxzb2Z0JTIwbWVkaWNhbCUyMGFic3RyYWN0JTIwYmx1ZSUyMG1pbnQlMjBncmFkaWVudCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzgzMDczNjc0fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Soft medical blue mint gradient background"
+    },
+    "health_tip_1": {
+      "url": "https://images.unsplash.com/photo-1713201427895-7d729f3cdf47?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwyfHxoZWFsdGh5JTIwbGlmZXN0eWxlJTIwZGlldCUyMGV4ZXJjaXNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgzMDczNjc0fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Woman standing in a kitchen holding an apple"
+    },
+    "health_tip_2": {
+      "url": "https://images.unsplash.com/photo-1579722820308-d74e571900a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwxfHxoZWFsdGh5JTIwbGlmZXN0eWxlJTIwZGlldCUyMGV4ZXJjaXNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgzMDczNjc0fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Woman holding clear plastic bottle"
+    }
+  ],
+  "haptics": {
+    "primary_button_press": "impactLight",
+    "tab_change": "selection",
+    "card_tap": "impactLight",
+    "date_time_select": "selection"
+  },
+  "instructions_to_main_agent": [
+    "Apply '1 iOS-Native Clean' guidelines: maintain generous padding (xl/2xl), use soft shadow tier 1 for cards, and rounded edges (md/lg) across the app.",
+    "User requested a 'premium, clean, soft, modern medical look' with 'blue + mint blended gradients'. The brandPrimary is soft blue and brandSecondary is mint green. Use these in gradients (e.g. for the welcome banner or floating action button).",
+    "Center Tab 'MyDocs': Must be a prominent, elevated, floating circular button on the bottom tab bar. Use a custom absolute positioned container if necessary.",
+    "Health Tips Carousel on Home: The images provided (health_tip_1, health_tip_2) MUST have a dark gradient scrim overlay (transparent to surfaceInverse) at the bottom, so text over it remains readable.",
+    "Doctor Image fallback: For Dr. Neha Kulkarni, since no female photo is available in the payload, use an initial-based avatar ('NK') inside a brandTertiary tinted circle.",
+    "Ensure 'Book Appointment' sticky CTA on the Doctor Overview screen floats gracefully over scrolling content, utilizing a glass/blur background constraint.",
+    "Typography must be clean (Plus Jakarta Sans). Cap font weight at 500 max everywhere (no bold/extra bold). Use size to denote hierarchy."
+  ]
+}
