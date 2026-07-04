@@ -5,8 +5,9 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, radius, spacing, shadowCard } from '@/src/theme';
-import { api, Patient } from '@/src/api';
+import { api, Patient, setAuthToken } from '@/src/api';
 import Avatar from '@/src/components/Avatar';
+import { storage } from '@/src/utils/storage';
 
 const OPTIONS: { key: string; label: string; icon: any; color: string; bg: string; route?: string }[] = [
   { key: 'personal', label: 'Personal Details', icon: 'person-outline', color: '#2A7AF2', bg: '#DBEAFE' },
@@ -25,6 +26,16 @@ export default function ProfileScreen() {
   useEffect(() => {
     api.patient().then(setPatient).catch(() => {});
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await storage.secureRemove('auth_token');
+      setAuthToken(null);
+      router.replace('/login');
+    } catch (e) {
+      console.warn('Logout failed', e);
+    }
+  };
 
   return (
     <View style={styles.container} testID="profile-screen">
@@ -89,6 +100,16 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           ))}
         </View>
+
+        <TouchableOpacity
+          testID="logout-btn"
+          activeOpacity={0.85}
+          onPress={handleLogout}
+          style={styles.logoutBtn}
+        >
+          <Ionicons name="log-out-outline" size={20} color={colors.error} />
+          <Text style={styles.logoutBtnTxt}>Log Out</Text>
+        </TouchableOpacity>
 
         <Text style={styles.version}>Premium Health Connect · v1.0</Text>
       </ScrollView>
@@ -164,4 +185,22 @@ const styles = StyleSheet.create({
   },
   optLabel: { flex: 1, fontSize: 14, color: colors.onSurface, fontWeight: '500' },
   version: { textAlign: 'center', fontSize: 11, color: colors.muted, marginTop: spacing.xl },
+  logoutBtn: {
+    marginHorizontal: spacing.xl,
+    marginTop: spacing.lg,
+    backgroundColor: '#FFF5F5',
+    borderRadius: radius.lg,
+    paddingVertical: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    borderWidth: 1,
+    borderColor: '#FEE2E2',
+  },
+  logoutBtnTxt: {
+    fontSize: 14,
+    color: colors.error,
+    fontWeight: '600',
+  },
 });

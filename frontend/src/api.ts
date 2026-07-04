@@ -1,8 +1,22 @@
-const BASE = process.env.EXPO_PUBLIC_BACKEND_URL;
+const BASE = process.env.EXPO_PUBLIC_BACKEND_URL || 'http://localhost:4000';
+
+let authToken: string | null = null;
+
+export const setAuthToken = (token: string | null) => {
+  authToken = token;
+};
 
 async function req<T>(path: string, opts?: RequestInit): Promise<T> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Bypass-Tunnel-Reminder': 'true',
+  };
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
+  }
+  
   const res = await fetch(`${BASE}/api${path}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     ...opts,
   });
   if (!res.ok) throw new Error(`API ${path} failed: ${res.status}`);
@@ -83,4 +97,14 @@ export const api = {
     req<Prescription[]>(`/prescriptions${doctorId ? `?doctor_id=${doctorId}` : ''}`),
   prescription: (id: string) => req<Prescription>(`/prescriptions/${id}`),
   healthTips: () => req<HealthTip[]>('/health-tips'),
+  sendOtp: (phone: string) =>
+    req<{ success: boolean; message: string; otp?: string }>('/auth/patient/send-otp', {
+      method: 'POST',
+      body: JSON.stringify({ phone }),
+    }),
+  verifyOtp: (phone: string, otp: string) =>
+    req<{ token: string; user: Patient }>('/auth/patient/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({ phone, otp }),
+    }),
 };
