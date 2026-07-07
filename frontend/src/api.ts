@@ -87,6 +87,8 @@ export type Patient = {
 
 export const api = {
   patient: () => req<Patient>('/patient'),
+  updatePatient: (body: Partial<Patient>) =>
+    req<Patient>('/patient', { method: 'PUT', body: JSON.stringify(body) }),
   doctors: () => req<Doctor[]>('/doctors'),
   doctor: (id: string) => req<Doctor>(`/doctors/${id}`),
   appointments: (doctorId?: string) =>
